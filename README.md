@@ -3,7 +3,7 @@ Go sync package with cancellable context
 
 ## Rationale
 
-`sync.Mutex`, `sync.RWMutex` and `sync.WaitGroup` can block execution until another goroutine releases them. However locking can happen for a long time and we live in dynamic world, where we need to move forward even if some resource stays locked for long. Hence the creation of `csync` — package with similar primitives, where waiting can be cancelled by context.
+`sync.Mutex`, `sync.RWMutex` and `sync.WaitGroup` can block execution until another goroutine releases them. However locking can happen for a long time and we live in dynamic world, where we need to move forward even if some resources stay locked for a long time. Hence the creation of `csync` — package with similar primitives, where waiting can be cancelled by context.
 
 ## Primitives
 
@@ -25,12 +25,15 @@ import (
 	"github.com/metalim/csync"
 )
 
+const workers = 3
+
 func main() {
 	var wg csync.WaitGroup
-	wg.Add(10)
-	for i := 0; i < 10; i++ {
+	wg.Add(workers)
+	for i := 0; i < workers; i++ {
 		go func() {
 			defer wg.Done()
+			// do some work in 3rd party library without context support
 			time.Sleep(time.Duration(rand.Intn(10)) * time.Second)
 		}()
 	}
@@ -39,6 +42,8 @@ func main() {
 	defer cancel()
 
 	err := wg.Wait(ctx)
-	log.Println(err)
+	if err != nil {
+		log.Println(err)
+	}
 }
 ```
