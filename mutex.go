@@ -18,6 +18,11 @@ func NewMutex() *Mutex {
 
 // Lock locks m.
 func (m *Mutex) Lock(ctx context.Context) error {
+	// implicit init
+	if m.lock == nil {
+		m.lock = make(chan struct{}, 1)
+	}
+
 	select {
 	case m.lock <- struct{}{}:
 		return nil
