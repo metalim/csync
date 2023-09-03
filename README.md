@@ -1,4 +1,11 @@
 # csync
+
+[![go test workflow](https://github.com/metalim/csync/actions/workflows/tests.yml/badge.svg)](https://github.com/metalim/csync/actions/workflows/tests.yml)
+[![go report](https://goreportcard.com/badge/github.com/metalim/csync)](https://goreportcard.com/report/github.com/metalim/csync)
+[![codecov](https://codecov.io/gh/metalim/csync/graph/badge.svg?token=TDALV236YQ)](https://codecov.io/gh/metalim/csync)
+[![go doc](https://img.shields.io/badge/godoc-reference-blue.svg)](https://pkg.go.dev/github.com/metalim/csync)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/mit/)
+
 Go sync package with cancellable context
 
 ## Rationale
